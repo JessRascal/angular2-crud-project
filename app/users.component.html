@@ -1,0 +1,21 @@
+<p>
+    <a href="/users/new" class="btn btn-primary">Add a User</a>
+</p>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let user of users">
+            <td>{{ user.name }}</td>
+            <td>{{ user.email }}</td>
+            <td><i class="glyphicon glyphicon-pencil"></i></td>
+            <td><i class="glyphicon glyphicon-remove"></i></td>
+        </tr>
+    </tbody>
+</table>

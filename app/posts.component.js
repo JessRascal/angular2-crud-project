@@ -9,24 +9,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var router_deprecated_1 = require('@angular/router-deprecated');
-var NavBarComponent = (function () {
-    function NavBarComponent(_router) {
-        this._router = _router;
+var PostsComponent = (function () {
+    function PostsComponent() {
     }
-    NavBarComponent.prototype.isCurrentRoute = function (route) {
-        var instruction = this._router.generate(route);
-        return this._router.isRouteActive(instruction);
-    };
-    NavBarComponent = __decorate([
+    PostsComponent = __decorate([
         core_1.Component({
-            selector: 'navbar',
-            templateUrl: 'app/navbar.component.html',
-            directives: [router_deprecated_1.ROUTER_DIRECTIVES]
+            selector: 'posts',
+            template: "\n        No posts to see here yet\n    "
         }), 
-        __metadata('design:paramtypes', [router_deprecated_1.Router])
-    ], NavBarComponent);
-    return NavBarComponent;
+        __metadata('design:paramtypes', [])
+    ], PostsComponent);
+    return PostsComponent;
 }());
-exports.NavBarComponent = NavBarComponent;
-//# sourceMappingURL=navbar.component.js.map
+exports.PostsComponent = PostsComponent;
+//# sourceMappingURL=posts.component.js.map

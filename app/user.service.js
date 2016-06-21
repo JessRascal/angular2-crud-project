@@ -9,24 +9,23 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var router_deprecated_1 = require('@angular/router-deprecated');
-var NavBarComponent = (function () {
-    function NavBarComponent(_router) {
-        this._router = _router;
+var http_1 = require('@angular/http');
+require('rxjs/add/operator/map');
+var UserService = (function () {
+    function UserService(_http) {
+        this._http = _http;
+        this._usersUrl = "http://jsonplaceholder.typicode.com/users";
     }
-    NavBarComponent.prototype.isCurrentRoute = function (route) {
-        var instruction = this._router.generate(route);
-        return this._router.isRouteActive(instruction);
+    UserService.prototype.getUsers = function () {
+        return this._http.get(this._usersUrl)
+            .map(function (res) { return res.json(); });
+        //TODO: Catch any errors.
     };
-    NavBarComponent = __decorate([
-        core_1.Component({
-            selector: 'navbar',
-            templateUrl: 'app/navbar.component.html',
-            directives: [router_deprecated_1.ROUTER_DIRECTIVES]
-        }), 
-        __metadata('design:paramtypes', [router_deprecated_1.Router])
-    ], NavBarComponent);
-    return NavBarComponent;
+    UserService = __decorate([
+        core_1.Injectable(), 
+        __metadata('design:paramtypes', [http_1.Http])
+    ], UserService);
+    return UserService;
 }());
-exports.NavBarComponent = NavBarComponent;
-//# sourceMappingURL=navbar.component.js.map
+exports.UserService = UserService;
+//# sourceMappingURL=user.service.js.map
