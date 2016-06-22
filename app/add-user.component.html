@@ -1,43 +1,51 @@
 <h2>Add a User</h2>
 <div class="row">
     <div class="col-md-6 well">
-        <form>
+        <form [ngFormModel]="addUserForm">
             <fieldset>
                 <legend>General</legend>
                 <div class="form-group">
                     <label for="name" class="control-label">Name</label>
-                    <input id="name" class="form-control" type="text" placeholder="full name">
+                    <input id="name" class="form-control" type="text" placeholder="full name" ngControl="name" #name="ngForm">
+                    <div *ngIf="name.touched && !name.valid"
+                        class="alert alert-danger" role="alert">
+                        Name is required
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="email" class="control-label">Email</label>
-                    <input id="email" class="form-control" type="email" placeholder="name@domain.com">
+                    <input id="email" class="form-control" type="email" placeholder="name@domain.com" ngControl="email" #email="ngForm">
+                    <div *ngIf="email.touched && !email.valid"
+                        class="alert alert-danger" role="alert">
+                        Enter a valid email address
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="phone" class="control-label">Phone</label>
-                    <input id="phone" class="form-control" type="tel" placeholder="contact number">
+                    <input id="phone" class="form-control" type="tel" placeholder="contact number" ngControl="phone" #phone="ngForm">
                 </div>
             </fieldset>
-            <fieldset>
+            <fieldset ngControlGroup="address">
                 <legend>Address</legend>
                 <div class="form-group">
                     <label for="street" class="control-label">Street</label>
-                    <input id="street" class="form-control" type="text" placeholder="street name">
+                    <input id="street" class="form-control" type="text" placeholder="street name" ngControl="street" #street="ngForm">
                 </div>
                 <div class="form-group">
                     <label for="suite" class="control-label">Suite</label>
-                    <input id="suite" class="form-control" type="text" placeholder="suite number">
+                    <input id="suite" class="form-control" type="text" placeholder="suite number" ngControl="suite" #suite="ngForm">
                 </div>
                 <div class="form-group">
                     <label for="city" class="control-label">City</label>
-                    <input id="city" class="form-control" type="text" placeholder="city name">
+                    <input id="city" class="form-control" type="text" placeholder="city name" ngControl="city" #city="ngForm">
                 </div>
                 <div class="form-group">
                     <label for="zip-code" class="control-label">Zip Code</label>
-                    <input id="zip-code" class="form-control" type="text" placeholder="zip code">
+                    <input id="zip-code" class="form-control" type="text" placeholder="zip code" ngControl="city" #zip="ngForm">
                 </div>
             </fieldset>
             <div class="form-group">
-                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="submit" class="btn btn-success" [disabled]="!addUserForm.valid">Save</button>
             </div>
         </form>
     </div>

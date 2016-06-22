@@ -13,7 +13,6 @@ var router_deprecated_1 = require('@angular/router-deprecated');
 var navbar_component_1 = require('./navbar.component');
 var home_component_1 = require('./home.component');
 var users_component_1 = require('./users.component');
-var add_user_component_1 = require('./add-user.component');
 var posts_component_1 = require('./posts.component');
 var AppComponent = (function () {
     function AppComponent() {
@@ -21,8 +20,7 @@ var AppComponent = (function () {
     AppComponent = __decorate([
         router_deprecated_1.RouteConfig([
             { path: '/', name: "Home", component: home_component_1.HomeComponent },
-            { path: '/users', name: 'Users', component: users_component_1.UsersComponent },
-            { path: '/users/new', name: 'Add User', component: add_user_component_1.AddUserComponent },
+            { path: '/users/...', name: 'Users', component: users_component_1.UsersComponent },
             { path: '/posts', name: 'Posts', component: posts_component_1.PostsComponent },
             { path: '/*other', name: 'Other', redirectTo: ['Home'] }
         ]),

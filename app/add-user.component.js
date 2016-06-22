@@ -9,15 +9,35 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var common_1 = require('@angular/common');
 var AddUserComponent = (function () {
-    function AddUserComponent() {
+    function AddUserComponent(formB) {
+        this.addUserForm = formB.group({
+            name: ['', common_1.Validators.required],
+            email: ['', common_1.Validators.compose([
+                    common_1.Validators.required,
+                    common_1.Validators.pattern("[A-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"),
+                ])],
+            phone: [''],
+            address: formB.group({
+                street: [''],
+                suite: [''],
+                city: [''],
+                zip: ['']
+            })
+        });
     }
+    AddUserComponent.prototype.routerCanDeactivate = function (next, previous) {
+        if (this.addUserForm.dirty) {
+            return confirm('Are you sure you want to lose any unsaved changes?');
+        }
+    };
     AddUserComponent = __decorate([
         core_1.Component({
             selector: 'add-user',
             templateUrl: 'app/add-user.component.html'
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [common_1.FormBuilder])
     ], AddUserComponent);
     return AddUserComponent;
 }());
