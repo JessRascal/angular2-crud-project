@@ -3,13 +3,13 @@ import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angular/route
 
 import { NavBarComponent } from './navbar.component';
 import { HomeComponent } from './home.component';
-import { UsersComponent } from './users.component';
-import { PostsComponent } from './posts.component';
+import { UsersHomeComponent } from './users/users-home.component';
+// import { PostsComponent } from './posts.component';
 
 @RouteConfig([
-    { path: '/', name: "Home", component: HomeComponent },
-    { path: '/users/...', name: 'Users', component: UsersComponent },
-    { path: '/posts', name: 'Posts', component: PostsComponent },
+    { path: '/', name: "Home", component: HomeComponent, useAsDefault: true },
+    { path: '/users/...', name: 'Users', component: UsersHomeComponent },
+    // { path: '/posts', name: 'Posts', component: PostsComponent },
     { path: '/*other', name: 'Other', redirectTo: ['Home'] }
 ])
 

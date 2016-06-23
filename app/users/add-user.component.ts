@@ -29,7 +29,7 @@ export class AddUserComponent implements CanDeactivate {
 
     routerCanDeactivate(next, previous) {
         if (this.addUserForm.dirty) {
-            return confirm('Are you sure you want to lose any unsaved changes?');
+            return confirm('All unsaved changes will be lost, leave anyway?');
         }
     }
 
