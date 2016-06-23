@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
+var router_deprecated_1 = require('@angular/router-deprecated');
 var user_service_1 = require('./user.service');
 var UsersListComponent = (function () {
     function UsersListComponent(_userService) {
@@ -28,7 +29,8 @@ var UsersListComponent = (function () {
         core_1.Component({
             selector: 'users-list',
             templateUrl: 'app/users/users-list.component.html',
-            providers: [http_1.HTTP_PROVIDERS]
+            directives: [router_deprecated_1.ROUTER_DIRECTIVES],
+            providers: [http_1.HTTP_PROVIDERS, user_service_1.UserService]
         }), 
         __metadata('design:paramtypes', [user_service_1.UserService])
     ], UsersListComponent);

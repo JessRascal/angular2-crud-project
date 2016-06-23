@@ -10,19 +10,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var router_deprecated_1 = require('@angular/router-deprecated');
-var user_service_1 = require('./user.service');
 var users_list_component_1 = require('./users-list.component');
+var add_user_component_1 = require('./add-user.component');
 var UsersComponent = (function () {
     function UsersComponent() {
     }
     UsersComponent = __decorate([
         router_deprecated_1.RouteConfig([
             { path: '/', name: 'UserList', component: users_list_component_1.UsersListComponent, useAsDefault: true },
+            { path: '/new', name: 'AddUser', component: add_user_component_1.AddUserComponent }
         ]),
         core_1.Component({
             template: "\n    <router-outlet></router-outlet>\n    ",
-            directives: [router_deprecated_1.ROUTER_DIRECTIVES],
-            providers: [router_deprecated_1.ROUTER_PROVIDERS, user_service_1.UserService]
+            directives: [router_deprecated_1.RouterOutlet]
         }), 
         __metadata('design:paramtypes', [])
     ], UsersComponent);

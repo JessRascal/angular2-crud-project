@@ -4,7 +4,7 @@ import { CanDeactivate } from '@angular/router-deprecated';
 
 @Component({
     selector: 'add-user',
-    templateUrl: 'app/add-user.component.html'
+    templateUrl: 'app/users/add-user.component.html'
 })
 
 export class AddUserComponent implements CanDeactivate {

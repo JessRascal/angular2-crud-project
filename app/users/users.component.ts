@@ -1,22 +1,21 @@
 import { Component } from '@angular/core';
-import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angular/router-deprecated';
+import { RouteConfig, RouterOutlet } from '@angular/router-deprecated';
 
 import { UserService } from './user.service';
 
-import { AddUserComponent } from './add-user.component';
 import { UsersListComponent } from './users-list.component';
+import { AddUserComponent } from './add-user.component';
 
 @RouteConfig([
     { path: '/', name: 'UserList', component: UsersListComponent, useAsDefault: true },
-    // { path: '/new', name: 'AddUser', component: AddUserComponent }
+    { path: '/new', name: 'AddUser', component: AddUserComponent }
 ])
 
 @Component({
     template: `
     <router-outlet></router-outlet>
     `,
-    directives: [ ROUTER_DIRECTIVES ],
-    providers: [ ROUTER_PROVIDERS, UserService ]
+    directives: [ RouterOutlet ]
 })
 
 export class UsersComponent { }

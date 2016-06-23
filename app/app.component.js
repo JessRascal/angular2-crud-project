@@ -13,22 +13,21 @@ var router_deprecated_1 = require('@angular/router-deprecated');
 var navbar_component_1 = require('./navbar.component');
 var home_component_1 = require('./home.component');
 var users_component_1 = require('./users/users.component');
-// import { PostsComponent } from './posts.component';
+var posts_component_1 = require('./posts/posts.component');
 var AppComponent = (function () {
     function AppComponent() {
     }
     AppComponent = __decorate([
         router_deprecated_1.RouteConfig([
-            { path: '/', name: "Home", component: home_component_1.HomeComponent, useAsDefault: true },
-            { path: '/users/...', name: 'Users', component: users_component_1.UsersComponent },
-            // { path: '/posts', name: 'Posts', component: PostsComponent },
+            { path: '/', name: "Home", component: home_component_1.HomeComponent },
+            { path: '/users/...', name: 'Users', component: users_component_1.UsersComponent, useAsDefault: true },
+            { path: '/posts', name: 'Posts', component: posts_component_1.PostsComponent },
             { path: '/*other', name: 'Other', redirectTo: ['Home'] }
         ]),
         core_1.Component({
             selector: 'my-app',
             template: "\n        <navbar></navbar>\n        <div class=\"container\">\n            <router-outlet></router-outlet>\n        </div>\n    ",
-            directives: [router_deprecated_1.ROUTER_DIRECTIVES, navbar_component_1.NavBarComponent],
-            providers: [router_deprecated_1.ROUTER_PROVIDERS]
+            directives: [router_deprecated_1.ROUTER_DIRECTIVES, navbar_component_1.NavBarComponent]
         }), 
         __metadata('design:paramtypes', [])
     ], AppComponent);

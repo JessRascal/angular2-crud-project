@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HTTP_PROVIDERS } from '@angular/http';
+import { Router, ROUTER_DIRECTIVES } from '@angular/router-deprecated';
 
 import { User } from './user';
 import { UserService } from './user.service';
@@ -7,7 +8,8 @@ import { UserService } from './user.service';
 @Component({
     selector: 'users-list',
     templateUrl: 'app/users/users-list.component.html',
-    providers: [ HTTP_PROVIDERS ]
+    directives: [ ROUTER_DIRECTIVES ],
+    providers: [ HTTP_PROVIDERS, UserService ]
 })
 
 export class UsersListComponent implements OnInit {

@@ -35,7 +35,7 @@ var AddUserComponent = (function () {
     AddUserComponent = __decorate([
         core_1.Component({
             selector: 'add-user',
-            templateUrl: 'app/add-user.component.html'
+            templateUrl: 'app/users/add-user.component.html'
         }), 
         __metadata('design:paramtypes', [common_1.FormBuilder])
     ], AddUserComponent);
