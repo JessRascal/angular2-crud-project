@@ -10,8 +10,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var common_1 = require('@angular/common');
+var http_1 = require('@angular/http');
+var user_service_1 = require('./user.service');
 var AddUserComponent = (function () {
-    function AddUserComponent(formB) {
+    // user = new User() ??????
+    function AddUserComponent(formB, _userService) {
+        this._userService = _userService;
         this.addUserForm = formB.group({
             name: ['', common_1.Validators.required],
             email: ['', common_1.Validators.compose([
@@ -32,12 +36,22 @@ var AddUserComponent = (function () {
             return confirm('All unsaved changes will be lost, leave anyway?');
         }
     };
+    AddUserComponent.prototype.onSubmit = function (formValue) {
+        // this.user = this.addUserForm.value;
+        // console.log(this.addUserForm.value)
+        // this._userService.createUser(this.user)
+        // console.log('Value submitted: ', formValue);
+        // var oldPassword = this.addUserForm.find('oldPassword');
+        // this.user.name = formValue['name'];
+        console.log(this.user.name);
+    };
     AddUserComponent = __decorate([
         core_1.Component({
             selector: 'add-user',
-            templateUrl: 'app/users/add-user.component.html'
+            templateUrl: 'app/users/add-user.component.html',
+            providers: [user_service_1.UserService, http_1.HTTP_PROVIDERS]
         }), 
-        __metadata('design:paramtypes', [common_1.FormBuilder])
+        __metadata('design:paramtypes', [common_1.FormBuilder, user_service_1.UserService])
     ], AddUserComponent);
     return AddUserComponent;
 }());

@@ -1,16 +1,22 @@
 import { Component } from '@angular/core';
 import { ControlGroup, FormBuilder, Validators } from '@angular/common';
 import { CanDeactivate } from '@angular/router-deprecated';
+import { HTTP_PROVIDERS } from '@angular/http';
+
+import { User } from './user';
+import { UserService } from './user.service';
 
 @Component({
     selector: 'add-user',
-    templateUrl: 'app/users/add-user.component.html'
+    templateUrl: 'app/users/add-user.component.html',
+    providers: [ UserService, HTTP_PROVIDERS ]
 })
 
 export class AddUserComponent implements CanDeactivate {
     addUserForm: ControlGroup;
+    // user = new User() ??????
 
-    constructor(formB: FormBuilder) {
+    constructor(formB: FormBuilder, private _userService: UserService) {
         this.addUserForm = formB.group({
             name: ['', Validators.required],
             email: ['', Validators.compose([
@@ -33,4 +39,13 @@ export class AddUserComponent implements CanDeactivate {
         }
     }
 
+    onSubmit(formValue: string) {
+        // this.user = this.addUserForm.value;
+        // console.log(this.addUserForm.value)
+        // this._userService.createUser(this.user)
+        // console.log('Value submitted: ', formValue);
+        // var oldPassword = this.addUserForm.find('oldPassword');
+        // this.user.name = formValue['name'];
+        console.log(this.user.name);
+    }
 }

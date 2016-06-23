@@ -1,7 +1,7 @@
 <h2>Add a User</h2>
 <div class="row">
     <div class="col-md-6 well">
-        <form [ngFormModel]="addUserForm">
+        <form [ngFormModel]="addUserForm" (ngSubmit)="onSubmit(addUserForm)">
             <fieldset>
                 <legend>General</legend>
                 <div class="form-group">
@@ -41,7 +41,7 @@
                 </div>
                 <div class="form-group">
                     <label for="zip-code" class="control-label">Zip Code</label>
-                    <input id="zip-code" class="form-control" type="text" placeholder="zip code" ngControl="city" #zip="ngForm">
+                    <input id="zip-code" class="form-control" type="text" placeholder="zip code" ngControl="zip" #zip="ngForm">
                 </div>
             </fieldset>
             <div class="form-group">
