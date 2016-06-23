@@ -19,4 +19,4 @@ import { UsersListComponent } from './users-list.component';
     providers: [ ROUTER_PROVIDERS, UserService ]
 })
 
-export class UsersHomeComponent { }
+export class UsersComponent { }
