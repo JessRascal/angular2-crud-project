@@ -19,8 +19,8 @@ var AppComponent = (function () {
     }
     AppComponent = __decorate([
         router_deprecated_1.RouteConfig([
-            { path: '/', name: "Home", component: home_component_1.HomeComponent },
-            { path: '/users/...', name: 'Users', component: users_component_1.UsersComponent, useAsDefault: true },
+            { path: '/', name: "Home", component: home_component_1.HomeComponent, useAsDefault: true },
+            { path: '/users/...', name: 'Users', component: users_component_1.UsersComponent },
             { path: '/posts', name: 'Posts', component: posts_component_1.PostsComponent },
             { path: '/*other', name: 'Other', redirectTo: ['Home'] }
         ]),
