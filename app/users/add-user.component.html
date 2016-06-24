@@ -1,7 +1,7 @@
 <h2>Add a User</h2>
 <div class="row">
     <div class="col-md-6 well">
-        <form [ngFormModel]="addUserForm" (ngSubmit)="onSubmit(addUserForm)">
+        <form [ngFormModel]="addUserForm" (ngSubmit)="onSubmit(addUserForm.value)">
             <fieldset>
                 <legend>General</legend>
                 <div class="form-group">

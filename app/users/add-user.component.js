@@ -11,11 +11,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var common_1 = require('@angular/common');
 var http_1 = require('@angular/http');
+var user_1 = require('./user');
 var user_service_1 = require('./user.service');
 var AddUserComponent = (function () {
-    // user = new User() ??????
     function AddUserComponent(formB, _userService) {
         this._userService = _userService;
+        this.user = new user_1.User();
         this.addUserForm = formB.group({
             name: ['', common_1.Validators.required],
             email: ['', common_1.Validators.compose([
@@ -43,7 +44,14 @@ var AddUserComponent = (function () {
         // console.log('Value submitted: ', formValue);
         // var oldPassword = this.addUserForm.find('oldPassword');
         // this.user.name = formValue['name'];
-        console.log(this.user.name);
+        // console.log(formValue);
+        // this.user = User();
+        // var name = this.addUserForm.controls['name'].value;
+        this.user.name = this.addUserForm.controls['name'].value;
+        console.log('Name in Object:', this.user.name);
+        // console.log(this.user[name]);
+        this._userService.createUser(this.user);
+        // TODO: Go back to 'Users' (create goBack method)
     };
     AddUserComponent = __decorate([
         core_1.Component({

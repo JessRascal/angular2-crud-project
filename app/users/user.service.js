@@ -25,8 +25,8 @@ var UserService = (function () {
     };
     UserService.prototype.createUser = function (user) {
         return this._http.post(this._usersUrl, JSON.stringify(user))
-            .map(function (res) { return res.json(); })
-            .subscribe(function (data) { return console.log('Server Response: ', data); });
+            .map(function (res) { return res.json(); });
+        // .subscribe(data => console.log('Server Response: ', data));
     };
     UserService = __decorate([
         core_1.Injectable(), 

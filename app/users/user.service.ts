@@ -21,9 +21,9 @@ export class UserService {
             //TODO: Catch any errors.
     }
 
-    createUser(user) {
+    createUser(user: User): Observable<User> {
         return this._http.post(this._usersUrl, JSON.stringify(user))
-            .map(res => res.json())
-            .subscribe(data => console.log('Server Response: ', data));
+            .map(res => res.json());
+            // .subscribe(data => console.log('Server Response: ', data));
     }
 }

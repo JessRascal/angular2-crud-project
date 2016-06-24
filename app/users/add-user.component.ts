@@ -14,7 +14,7 @@ import { UserService } from './user.service';
 
 export class AddUserComponent implements CanDeactivate {
     addUserForm: ControlGroup;
-    // user = new User() ??????
+    user = new User();
 
     constructor(formB: FormBuilder, private _userService: UserService) {
         this.addUserForm = formB.group({
@@ -46,6 +46,15 @@ export class AddUserComponent implements CanDeactivate {
         // console.log('Value submitted: ', formValue);
         // var oldPassword = this.addUserForm.find('oldPassword');
         // this.user.name = formValue['name'];
-        console.log(this.user.name);
+        // console.log(formValue);
+        // this.user = User();
+        
+        // var name = this.addUserForm.controls['name'].value;
+        this.user.name = this.addUserForm.controls['name'].value;
+        console.log('Name in Object:', this.user.name);
+        // console.log(this.user[name]);
+
+        this._userService.createUser(this.user);
+        // TODO: Go back to 'Users' (create goBack method)
     }
 }
