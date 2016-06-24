@@ -11,14 +11,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var router_deprecated_1 = require('@angular/router-deprecated');
 var users_list_component_1 = require('./users-list.component');
-var add_user_component_1 = require('./add-user.component');
+var create_user_component_1 = require('./create-user.component');
 var UsersComponent = (function () {
     function UsersComponent() {
     }
     UsersComponent = __decorate([
         router_deprecated_1.RouteConfig([
             { path: '/', name: 'UserList', component: users_list_component_1.UsersListComponent, useAsDefault: true },
-            { path: '/new', name: 'AddUser', component: add_user_component_1.AddUserComponent }
+            { path: '/new', name: 'CreateUser', component: create_user_component_1.CreateUserComponent }
         ]),
         core_1.Component({
             template: "\n    <router-outlet></router-outlet>\n    ",

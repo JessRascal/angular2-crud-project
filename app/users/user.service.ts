@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/do'; //Debugging
 import 'rxjs/add/operator/catch';
 
 import { User } from './User';
@@ -17,13 +16,17 @@ export class UserService {
 
     getUsers(): Observable<User[]> {
         return this._http.get(this._usersUrl)
-            .map(res => res.json());
-            //TODO: Catch any errors.
+            .map(
+                res => res.json(),
+                err => console.log(err)
+                );
     }
 
     createUser(user: User): Observable<User> {
         return this._http.post(this._usersUrl, JSON.stringify(user))
-            .map(res => res.json());
-            // .subscribe(data => console.log('Server Response: ', data));
+            .map(
+                res => res.json(),
+                err => console.log(err)
+                );
     }
 }

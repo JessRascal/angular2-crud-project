@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ControlGroup, FormBuilder, Validators } from '@angular/common';
-import { CanDeactivate } from '@angular/router-deprecated';
+import { CanDeactivate, Router } from '@angular/router-deprecated';
 import { HTTP_PROVIDERS } from '@angular/http';
 
 import { User } from './user';
@@ -8,15 +8,15 @@ import { UserService } from './user.service';
 
 @Component({
     selector: 'add-user',
-    templateUrl: 'app/users/add-user.component.html',
+    templateUrl: 'app/users/create-user.component.html',
     providers: [ UserService, HTTP_PROVIDERS ]
 })
 
-export class AddUserComponent implements CanDeactivate {
+export class CreateUserComponent implements CanDeactivate {
     addUserForm: ControlGroup;
     user = new User();
 
-    constructor(formB: FormBuilder, private _userService: UserService) {
+    constructor(formB: FormBuilder, private _userService: UserService, private _router: Router) {
         this.addUserForm = formB.group({
             name: ['', Validators.required],
             email: ['', Validators.compose([
@@ -30,7 +30,7 @@ export class AddUserComponent implements CanDeactivate {
                 city: [''],
                 zip: ['']
             })
-        })
+        });
     }
 
     routerCanDeactivate(next, previous) {
@@ -40,21 +40,13 @@ export class AddUserComponent implements CanDeactivate {
     }
 
     onSubmit(formValue: string) {
-        // this.user = this.addUserForm.value;
-        // console.log(this.addUserForm.value)
-        // this._userService.createUser(this.user)
-        // console.log('Value submitted: ', formValue);
-        // var oldPassword = this.addUserForm.find('oldPassword');
-        // this.user.name = formValue['name'];
-        // console.log(formValue);
-        // this.user = User();
-        
-        // var name = this.addUserForm.controls['name'].value;
-        this.user.name = this.addUserForm.controls['name'].value;
-        console.log('Name in Object:', this.user.name);
-        // console.log(this.user[name]);
-
-        this._userService.createUser(this.user);
-        // TODO: Go back to 'Users' (create goBack method)
+        this.user = this.addUserForm.value;
+        this._userService.createUser(this.user)
+        .subscribe(res => {
+            console.log(res)
+            // TODO: this.addUserForm.markAsPristine() when available.
+            // This will stop the confirmation being displayed when saving.
+            this._router.navigate(['UserList']);
+        });
     }
 }

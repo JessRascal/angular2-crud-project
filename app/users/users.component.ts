@@ -4,11 +4,11 @@ import { RouteConfig, RouterOutlet } from '@angular/router-deprecated';
 import { UserService } from './user.service';
 
 import { UsersListComponent } from './users-list.component';
-import { AddUserComponent } from './add-user.component';
+import { CreateUserComponent } from './create-user.component';
 
 @RouteConfig([
     { path: '/', name: 'UserList', component: UsersListComponent, useAsDefault: true },
-    { path: '/new', name: 'AddUser', component: AddUserComponent }
+    { path: '/new', name: 'CreateUser', component: CreateUserComponent }
 ])
 
 @Component({

@@ -10,12 +10,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var common_1 = require('@angular/common');
+var router_deprecated_1 = require('@angular/router-deprecated');
 var http_1 = require('@angular/http');
 var user_1 = require('./user');
 var user_service_1 = require('./user.service');
-var AddUserComponent = (function () {
-    function AddUserComponent(formB, _userService) {
+var CreateUserComponent = (function () {
+    function CreateUserComponent(formB, _userService, _router) {
         this._userService = _userService;
+        this._router = _router;
         this.user = new user_1.User();
         this.addUserForm = formB.group({
             name: ['', common_1.Validators.required],
@@ -32,36 +34,31 @@ var AddUserComponent = (function () {
             })
         });
     }
-    AddUserComponent.prototype.routerCanDeactivate = function (next, previous) {
+    CreateUserComponent.prototype.routerCanDeactivate = function (next, previous) {
         if (this.addUserForm.dirty) {
             return confirm('All unsaved changes will be lost, leave anyway?');
         }
     };
-    AddUserComponent.prototype.onSubmit = function (formValue) {
-        // this.user = this.addUserForm.value;
-        // console.log(this.addUserForm.value)
-        // this._userService.createUser(this.user)
-        // console.log('Value submitted: ', formValue);
-        // var oldPassword = this.addUserForm.find('oldPassword');
-        // this.user.name = formValue['name'];
-        // console.log(formValue);
-        // this.user = User();
-        // var name = this.addUserForm.controls['name'].value;
-        this.user.name = this.addUserForm.controls['name'].value;
-        console.log('Name in Object:', this.user.name);
-        // console.log(this.user[name]);
-        this._userService.createUser(this.user);
-        // TODO: Go back to 'Users' (create goBack method)
+    CreateUserComponent.prototype.onSubmit = function (formValue) {
+        var _this = this;
+        this.user = this.addUserForm.value;
+        this._userService.createUser(this.user)
+            .subscribe(function (res) {
+            console.log(res);
+            // TODO: this.addUserForm.markAsPristine() when available.
+            // This will stop the confirmation being displayed when saving.
+            _this._router.navigate(['UserList']);
+        });
     };
-    AddUserComponent = __decorate([
+    CreateUserComponent = __decorate([
         core_1.Component({
             selector: 'add-user',
-            templateUrl: 'app/users/add-user.component.html',
+            templateUrl: 'app/users/create-user.component.html',
             providers: [user_service_1.UserService, http_1.HTTP_PROVIDERS]
         }), 
-        __metadata('design:paramtypes', [common_1.FormBuilder, user_service_1.UserService])
-    ], AddUserComponent);
-    return AddUserComponent;
+        __metadata('design:paramtypes', [common_1.FormBuilder, user_service_1.UserService, router_deprecated_1.Router])
+    ], CreateUserComponent);
+    return CreateUserComponent;
 }());
-exports.AddUserComponent = AddUserComponent;
-//# sourceMappingURL=add-user.component.js.map
+exports.CreateUserComponent = CreateUserComponent;
+//# sourceMappingURL=create-user.component.js.map

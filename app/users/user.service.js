@@ -11,7 +11,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
 require('rxjs/add/operator/map');
-require('rxjs/add/operator/do'); //Debugging
 require('rxjs/add/operator/catch');
 var UserService = (function () {
     function UserService(_http) {
@@ -20,13 +19,11 @@ var UserService = (function () {
     }
     UserService.prototype.getUsers = function () {
         return this._http.get(this._usersUrl)
-            .map(function (res) { return res.json(); });
-        //TODO: Catch any errors.
+            .map(function (res) { return res.json(); }, function (err) { return console.log(err); });
     };
     UserService.prototype.createUser = function (user) {
         return this._http.post(this._usersUrl, JSON.stringify(user))
-            .map(function (res) { return res.json(); });
-        // .subscribe(data => console.log('Server Response: ', data));
+            .map(function (res) { return res.json(); }, function (err) { return console.log(err); });
     };
     UserService = __decorate([
         core_1.Injectable(), 
