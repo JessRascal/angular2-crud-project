@@ -5,6 +5,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
 import { Post } from './post';
+import { PostComment } from './post';
 
 @Injectable()
 export class PostsService {
@@ -18,7 +19,16 @@ export class PostsService {
             .map(
                 res => res.json(),
                 err => console.log(err)
-                );
+            );
+    }
+
+    // GET a post's comments.
+    getPostComments(id: string): Observable<PostComment[]> {
+        return this._http.get(this._postsUrl + '/' + id + '/' + 'comments')
+            .map(
+                res => res.json(),
+                err => console.log(err)
+            );
     }
 
 }

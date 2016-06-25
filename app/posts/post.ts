@@ -4,3 +4,11 @@ export class Post {
     title: string;
     body: string;
 }
+
+export class PostComment {
+    postid: string;
+    id: string;
+    name: string;
+    email: string;
+    body: string;
+}

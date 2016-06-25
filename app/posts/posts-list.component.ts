@@ -5,7 +5,6 @@ import { PostsService } from './posts.service';
 
 import { Post } from './post';
 
-import { PostDetailsComponent } from './post-details.component';
 import { SpinnerComponent } from '../shared/spinner.component';
 
 @Component({
@@ -20,15 +19,21 @@ import { SpinnerComponent } from '../shared/spinner.component';
             background-color: #eee;
             border-color: #eee;
         }
+
+        .comment-img {
+            border-radius: 100%;
+        }
     `],
-    directives: [ PostDetailsComponent, SpinnerComponent ],
+    directives: [ SpinnerComponent ],
     providers: [ HTTP_PROVIDERS, PostsService ]
 })
 
 export class PostsListComponent implements OnInit {
     isLoading = true;
     posts = [];
+    comments = [];
     selectedPost: Post;
+    commentsLoading = true;
 
     constructor(private _postsService: PostsService) { }
 
@@ -45,8 +50,22 @@ export class PostsListComponent implements OnInit {
             });
     }
 
+    getPostComments(id) {
+        this._postsService.getPostComments(id)
+            .subscribe(comments => {
+                this.comments = comments,
+                this.commentsLoading = false;
+                // console.log(comments) // Debugging
+            });
+    }
+
     postSelected(post: Post) {
+        // Reset the comments state
+        this.commentsLoading = true;
+        this.comments = [];
+
         this.selectedPost = post;
         // console.log('Selected post: ', this.selectedPost); // Debugging
+        this.getPostComments(this.selectedPost.id);
     }
 }

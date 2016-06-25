@@ -5,4 +5,10 @@ var Post = (function () {
     return Post;
 }());
 exports.Post = Post;
+var PostComment = (function () {
+    function PostComment() {
+    }
+    return PostComment;
+}());
+exports.PostComment = PostComment;
 //# sourceMappingURL=post.js.map

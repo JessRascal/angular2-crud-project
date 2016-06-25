@@ -11,13 +11,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
 var posts_service_1 = require('./posts.service');
-var post_details_component_1 = require('./post-details.component');
 var spinner_component_1 = require('../shared/spinner.component');
 var PostsListComponent = (function () {
     function PostsListComponent(_postsService) {
         this._postsService = _postsService;
         this.isLoading = true;
         this.posts = [];
+        this.comments = [];
+        this.commentsLoading = true;
     }
     PostsListComponent.prototype.ngOnInit = function () {
         this.getPosts();
@@ -31,16 +32,29 @@ var PostsListComponent = (function () {
             // console.log(posts) // Debugging
         });
     };
+    PostsListComponent.prototype.getPostComments = function (id) {
+        var _this = this;
+        this._postsService.getPostComments(id)
+            .subscribe(function (comments) {
+            _this.comments = comments,
+                _this.commentsLoading = false;
+            // console.log(comments) // Debugging
+        });
+    };
     PostsListComponent.prototype.postSelected = function (post) {
+        // Reset the comments state
+        this.commentsLoading = true;
+        this.comments = [];
         this.selectedPost = post;
         // console.log('Selected post: ', this.selectedPost); // Debugging
+        this.getPostComments(this.selectedPost.id);
     };
     PostsListComponent = __decorate([
         core_1.Component({
             selector: 'posts-list',
             templateUrl: 'app/posts/posts-list.component.html',
-            styles: ["\n        .list-group-item.active,\n        .list-group-item:hover,\n        .list-group-item:focus {\n            cursor: pointer;\n            color: #212121;\n            background-color: #eee;\n            border-color: #eee;\n        }\n    "],
-            directives: [post_details_component_1.PostDetailsComponent, spinner_component_1.SpinnerComponent],
+            styles: ["\n        .list-group-item.active,\n        .list-group-item:hover,\n        .list-group-item:focus {\n            cursor: pointer;\n            color: #212121;\n            background-color: #eee;\n            border-color: #eee;\n        }\n\n        .comment-img {\n            border-radius: 100%;\n        }\n    "],
+            directives: [spinner_component_1.SpinnerComponent],
             providers: [http_1.HTTP_PROVIDERS, posts_service_1.PostsService]
         }), 
         __metadata('design:paramtypes', [posts_service_1.PostsService])

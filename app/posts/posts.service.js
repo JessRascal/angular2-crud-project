@@ -22,6 +22,11 @@ var PostsService = (function () {
         return this._http.get(this._postsUrl)
             .map(function (res) { return res.json(); }, function (err) { return console.log(err); });
     };
+    // GET a post's comments.
+    PostsService.prototype.getPostComments = function (id) {
+        return this._http.get(this._postsUrl + '/' + id + '/' + 'comments')
+            .map(function (res) { return res.json(); }, function (err) { return console.log(err); });
+    };
     PostsService = __decorate([
         core_1.Injectable(), 
         __metadata('design:paramtypes', [http_1.Http])
