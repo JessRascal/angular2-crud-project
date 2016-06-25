@@ -15,8 +15,13 @@ export class PostService {
     constructor(private _http: Http) { }
 
     // GET all posts.
-    getPosts(): Observable<[Post]> {
-        return this._http.get(this._postsUrl)
+    getPosts(filter?): Observable<[Post]> {
+        var url = this._postsUrl;
+
+        if (filter && filter.userId)
+            url += "?userId=" + filter.userId;
+
+        return this._http.get(url)
             .map(
                 res => res.json(),
                 err => console.log(err)
@@ -31,13 +36,4 @@ export class PostService {
                 err => console.log(err)
             );
     }
-
-    getUsersPosts(id: string) {
-        return this._http.get(this._postsUrl + '?userId=' + id)
-            .map(
-                res => res.json(),
-                err => console.log(err)
-            );
-    }
-
 }

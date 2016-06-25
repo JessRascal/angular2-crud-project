@@ -34,64 +34,59 @@ import { SpinnerComponent } from '../shared/spinner.component';
 })
 
 export class PostsListComponent implements OnInit {
-    isLoading = true;
+    postsLoading;
+    users = [];
     posts = [];
     comments = [];
     selectedPost: Post;
-    commentsLoading = true;
-    users = [];
+    commentsLoading;
 
-    constructor(private _postsService: PostService, private _usersService: UserService) { }
+    constructor(
+        private _postsService: PostService,
+        private _usersService: UserService) { }
 
     ngOnInit() {
         this.getPosts();
         this.getUsers();
     }
 
-    getUsers() {
+    private getUsers() {
         this._usersService.getUsers()
             .subscribe(users => {
-                this.users = users
+                this.users = users;
                 // console.log(this.users) // Debugging
             });
     }
 
-    getPosts() {
-        this._postsService.getPosts()
+    private getPosts(filter?) {
+        this.postsLoading = true;
+        this._postsService.getPosts(filter)
             .subscribe(posts => {
-                this.posts = posts,
-                this.isLoading = false
-                // console.log(posts) // Debugging
-            });
+                this.posts = posts;
+                // console.log(posts); // Debugging
+            },
+            null,
+            () => { this.postsLoading = false });
     }
 
     getPostComments(id) {
+        this.commentsLoading = true;
         this._postsService.getPostComments(id)
             .subscribe(comments => {
-                this.comments = comments,
-                this.commentsLoading = false;
+                this.comments = comments;
                 // console.log(comments) // Debugging
-            });
+            },
+            null,
+            () => { this.commentsLoading = false });
     }
 
     postSelected(post: Post) {
         // Reset the comments state
         this.commentsLoading = true;
-        this.comments = [];
+        this.comments = null;
 
         this.selectedPost = post;
         // console.log('Selected post: ', this.selectedPost); // Debugging
         this.getPostComments(this.selectedPost.id);
-    }
-
-    getUsersPosts(id: string) {
-        if (id == '0') {
-            this.getPosts();
-            return;
-        }
-        this._postsService.getUsersPosts(id)
-            .subscribe(posts => {
-                this.posts = posts
-            });
     }
 }

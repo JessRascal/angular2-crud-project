@@ -17,11 +17,9 @@ var PostsListComponent = (function () {
     function PostsListComponent(_postsService, _usersService) {
         this._postsService = _postsService;
         this._usersService = _usersService;
-        this.isLoading = true;
+        this.users = [];
         this.posts = [];
         this.comments = [];
-        this.commentsLoading = true;
-        this.users = [];
     }
     PostsListComponent.prototype.ngOnInit = function () {
         this.getPosts();
@@ -35,42 +33,31 @@ var PostsListComponent = (function () {
             // console.log(this.users) // Debugging
         });
     };
-    PostsListComponent.prototype.getPosts = function () {
+    PostsListComponent.prototype.getPosts = function (filter) {
         var _this = this;
-        this._postsService.getPosts()
+        this.postsLoading = true;
+        this._postsService.getPosts(filter)
             .subscribe(function (posts) {
-            _this.posts = posts,
-                _this.isLoading = false;
-            // console.log(posts) // Debugging
-        });
+            _this.posts = posts;
+            // console.log(posts); // Debugging
+        }, null, function () { _this.postsLoading = false; });
     };
     PostsListComponent.prototype.getPostComments = function (id) {
         var _this = this;
+        this.commentsLoading = true;
         this._postsService.getPostComments(id)
             .subscribe(function (comments) {
-            _this.comments = comments,
-                _this.commentsLoading = false;
+            _this.comments = comments;
             // console.log(comments) // Debugging
-        });
+        }, null, function () { _this.commentsLoading = false; });
     };
     PostsListComponent.prototype.postSelected = function (post) {
         // Reset the comments state
         this.commentsLoading = true;
-        this.comments = [];
+        this.comments = null;
         this.selectedPost = post;
         // console.log('Selected post: ', this.selectedPost); // Debugging
         this.getPostComments(this.selectedPost.id);
-    };
-    PostsListComponent.prototype.getUsersPosts = function (id) {
-        var _this = this;
-        if (id == '0') {
-            this.getPosts();
-            return;
-        }
-        this._postsService.getUsersPosts(id)
-            .subscribe(function (posts) {
-            _this.posts = posts;
-        });
     };
     PostsListComponent = __decorate([
         core_1.Component({

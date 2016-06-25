@@ -18,17 +18,16 @@ var PostService = (function () {
         this._postsUrl = "http://jsonplaceholder.typicode.com/posts";
     }
     // GET all posts.
-    PostService.prototype.getPosts = function () {
-        return this._http.get(this._postsUrl)
+    PostService.prototype.getPosts = function (filter) {
+        var url = this._postsUrl;
+        if (filter && filter.userId)
+            url += "?userId=" + filter.userId;
+        return this._http.get(url)
             .map(function (res) { return res.json(); }, function (err) { return console.log(err); });
     };
     // GET a post's comments.
     PostService.prototype.getPostComments = function (id) {
         return this._http.get(this._postsUrl + '/' + id + '/' + 'comments')
-            .map(function (res) { return res.json(); }, function (err) { return console.log(err); });
-    };
-    PostService.prototype.getUsersPosts = function (id) {
-        return this._http.get(this._postsUrl + '?userId=' + id)
             .map(function (res) { return res.json(); }, function (err) { return console.log(err); });
     };
     PostService = __decorate([

@@ -1,7 +1,7 @@
 <h3>Posts</h3>
 <div class="row">
     <div class="col-md-6">
-        <select class="form-control" #uId (change)="getUsersPosts(uId.value)">
+        <select class="form-control" #uId (change)="getPosts({ userId: uId.value })">
             <option value="0" selected>Select a user...</option>
             <option *ngFor="let user of users" value="{{ user.id }}">{{ user.name }}</option>
         </select>
@@ -9,7 +9,7 @@
 </div>
 <div class="row top-buffer">
     <div class="col-md-6">
-        <spinner [visible]="isLoading"></spinner>
+        <spinner [visible]="postsLoading"></spinner>
         <ul class="list-group">
             <li class="list-group-item" *ngFor="let post of posts" (click)="postSelected(post)" [class.active]="selectedPost == post">{{ post.title }}</li>
         </ul>
