@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HTTP_PROVIDERS } from '@angular/http';
 
-import { PostsService } from './posts.service';
+import { UserService } from '../users/user.service';
+import { PostService } from './post.service';
 
 import { Post } from './post';
 
@@ -23,9 +24,13 @@ import { SpinnerComponent } from '../shared/spinner.component';
         .comment-img {
             border-radius: 100%;
         }
+
+        .top-buffer {
+            margin-top:20px;
+        }
     `],
     directives: [ SpinnerComponent ],
-    providers: [ HTTP_PROVIDERS, PostsService ]
+    providers: [ HTTP_PROVIDERS, UserService, PostService ]
 })
 
 export class PostsListComponent implements OnInit {
@@ -34,11 +39,21 @@ export class PostsListComponent implements OnInit {
     comments = [];
     selectedPost: Post;
     commentsLoading = true;
+    users = [];
 
-    constructor(private _postsService: PostsService) { }
+    constructor(private _postsService: PostService, private _usersService: UserService) { }
 
     ngOnInit() {
         this.getPosts();
+        this.getUsers();
+    }
+
+    getUsers() {
+        this._usersService.getUsers()
+            .subscribe(users => {
+                this.users = users
+                // console.log(this.users) // Debugging
+            });
     }
 
     getPosts() {
@@ -67,5 +82,16 @@ export class PostsListComponent implements OnInit {
         this.selectedPost = post;
         // console.log('Selected post: ', this.selectedPost); // Debugging
         this.getPostComments(this.selectedPost.id);
+    }
+
+    getUsersPosts(id: string) {
+        if (id == '0') {
+            this.getPosts();
+            return;
+        }
+        this._postsService.getUsersPosts(id)
+            .subscribe(posts => {
+                this.posts = posts
+            });
     }
 }

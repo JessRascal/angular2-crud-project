@@ -10,18 +10,30 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
-var posts_service_1 = require('./posts.service');
+var user_service_1 = require('../users/user.service');
+var post_service_1 = require('./post.service');
 var spinner_component_1 = require('../shared/spinner.component');
 var PostsListComponent = (function () {
-    function PostsListComponent(_postsService) {
+    function PostsListComponent(_postsService, _usersService) {
         this._postsService = _postsService;
+        this._usersService = _usersService;
         this.isLoading = true;
         this.posts = [];
         this.comments = [];
         this.commentsLoading = true;
+        this.users = [];
     }
     PostsListComponent.prototype.ngOnInit = function () {
         this.getPosts();
+        this.getUsers();
+    };
+    PostsListComponent.prototype.getUsers = function () {
+        var _this = this;
+        this._usersService.getUsers()
+            .subscribe(function (users) {
+            _this.users = users;
+            // console.log(this.users) // Debugging
+        });
     };
     PostsListComponent.prototype.getPosts = function () {
         var _this = this;
@@ -49,15 +61,26 @@ var PostsListComponent = (function () {
         // console.log('Selected post: ', this.selectedPost); // Debugging
         this.getPostComments(this.selectedPost.id);
     };
+    PostsListComponent.prototype.getUsersPosts = function (id) {
+        var _this = this;
+        if (id == '0') {
+            this.getPosts();
+            return;
+        }
+        this._postsService.getUsersPosts(id)
+            .subscribe(function (posts) {
+            _this.posts = posts;
+        });
+    };
     PostsListComponent = __decorate([
         core_1.Component({
             selector: 'posts-list',
             templateUrl: 'app/posts/posts-list.component.html',
-            styles: ["\n        .list-group-item.active,\n        .list-group-item:hover,\n        .list-group-item:focus {\n            cursor: pointer;\n            color: #212121;\n            background-color: #eee;\n            border-color: #eee;\n        }\n\n        .comment-img {\n            border-radius: 100%;\n        }\n    "],
+            styles: ["\n        .list-group-item.active,\n        .list-group-item:hover,\n        .list-group-item:focus {\n            cursor: pointer;\n            color: #212121;\n            background-color: #eee;\n            border-color: #eee;\n        }\n\n        .comment-img {\n            border-radius: 100%;\n        }\n\n        .top-buffer {\n            margin-top:20px;\n        }\n    "],
             directives: [spinner_component_1.SpinnerComponent],
-            providers: [http_1.HTTP_PROVIDERS, posts_service_1.PostsService]
+            providers: [http_1.HTTP_PROVIDERS, user_service_1.UserService, post_service_1.PostService]
         }), 
-        __metadata('design:paramtypes', [posts_service_1.PostsService])
+        __metadata('design:paramtypes', [post_service_1.PostService, user_service_1.UserService])
     ], PostsListComponent);
     return PostsListComponent;
 }());

@@ -12,26 +12,30 @@ var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
 require('rxjs/add/operator/map');
 require('rxjs/add/operator/catch');
-var PostsService = (function () {
-    function PostsService(_http) {
+var PostService = (function () {
+    function PostService(_http) {
         this._http = _http;
         this._postsUrl = "http://jsonplaceholder.typicode.com/posts";
     }
     // GET all posts.
-    PostsService.prototype.getPosts = function () {
+    PostService.prototype.getPosts = function () {
         return this._http.get(this._postsUrl)
             .map(function (res) { return res.json(); }, function (err) { return console.log(err); });
     };
     // GET a post's comments.
-    PostsService.prototype.getPostComments = function (id) {
+    PostService.prototype.getPostComments = function (id) {
         return this._http.get(this._postsUrl + '/' + id + '/' + 'comments')
             .map(function (res) { return res.json(); }, function (err) { return console.log(err); });
     };
-    PostsService = __decorate([
+    PostService.prototype.getUsersPosts = function (id) {
+        return this._http.get(this._postsUrl + '?userId=' + id)
+            .map(function (res) { return res.json(); }, function (err) { return console.log(err); });
+    };
+    PostService = __decorate([
         core_1.Injectable(), 
         __metadata('design:paramtypes', [http_1.Http])
-    ], PostsService);
-    return PostsService;
+    ], PostService);
+    return PostService;
 }());
-exports.PostsService = PostsService;
-//# sourceMappingURL=posts.service.js.map
+exports.PostService = PostService;
+//# sourceMappingURL=post.service.js.map
