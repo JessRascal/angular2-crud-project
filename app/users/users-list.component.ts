@@ -7,12 +7,18 @@ import { UserService } from './user.service';
 @Component({
     selector: 'users-list',
     templateUrl: 'app/users/users-list.component.html',
+    styles: [`
+        i {
+            cursor: pointer;
+        }
+    `],
     directives: [ ROUTER_DIRECTIVES ],
     providers: [ HTTP_PROVIDERS, UserService ]
 })
 
 export class UsersListComponent implements OnInit {
     users = [];
+    userId: string;
 
     constructor(private _userService: UserService) {
         
@@ -24,6 +30,24 @@ export class UsersListComponent implements OnInit {
                 users => this.users = users,
                 error => console.error(error)
                 );
+    }
+
+    deleteUser(user) {
+        if (confirm('Are you sure you want to delete ' + user.name + '?')) {
+			var index = this.users.indexOf(user)
+			// Remove the user based on their index.
+            this.users.splice(index, 1);
+
+			this._userService.deleteUser(user.id)
+				.subscribe(res =>
+                    console.log('User ' + user.name + ' deleted'), // Debugging
+					err => {
+						alert("Unable to delete the user. Please try again.");
+                        // Revert the view back to its original state
+                        // by putting the user object at its original index.
+						this.users.splice(index, 0, user);
+					});
+        }
     }
 
     ngOnInit() {

@@ -1,5 +1,5 @@
 <p>
-    <a [routerLink]="['CreateUser']" class="btn btn-primary">Add a User</a>
+    <a [routerLink]="['CreateUser']" class="btn btn-primary">Create User</a>
 </p>
 <table class="table table-bordered">
     <thead>
@@ -14,8 +14,8 @@
         <tr *ngFor="let user of users">
             <td>{{ user.name }}</td>
             <td>{{ user.email }}</td>
-            <td><i class="glyphicon glyphicon-pencil"></i></td>
-            <td><i class="glyphicon glyphicon-remove"></i></td>
+            <td><a [routerLink]="['EditUser', { id: user.id }]"><i class="glyphicon glyphicon-pencil"></i></a></td>
+            <td><i class="glyphicon glyphicon-remove" (click)="deleteUser(user)"></i></td>
         </tr>
     </tbody>
 </table>

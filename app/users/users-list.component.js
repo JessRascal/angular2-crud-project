@@ -22,6 +22,25 @@ var UsersListComponent = (function () {
         this._userService.getUsers()
             .subscribe(function (users) { return _this.users = users; }, function (error) { return console.error(error); });
     };
+    UsersListComponent.prototype.deleteUser = function (user) {
+        var _this = this;
+        if (confirm('Are you sure you want to delete ' + user.name + '?')) {
+            var index = this.users.indexOf(user);
+            // Remove the user based on their index.
+            this.users.splice(index, 1);
+            this._userService.deleteUser(user.id)
+                .subscribe(function (res) {
+                return console.log('User ' + user.name + ' deleted');
+            }, // Debugging
+            function (// Debugging
+                err) {
+                alert("Unable to delete the user. Please try again.");
+                // Revert the view back to its original state
+                // by putting the user object at its original index.
+                _this.users.splice(index, 0, user);
+            });
+        }
+    };
     UsersListComponent.prototype.ngOnInit = function () {
         this.getUsers();
     };
@@ -29,6 +48,7 @@ var UsersListComponent = (function () {
         core_1.Component({
             selector: 'users-list',
             templateUrl: 'app/users/users-list.component.html',
+            styles: ["\n        i {\n            cursor: pointer;\n        }\n    "],
             directives: [router_deprecated_1.ROUTER_DIRECTIVES],
             providers: [http_1.HTTP_PROVIDERS, user_service_1.UserService]
         }), 

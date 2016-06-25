@@ -14,12 +14,14 @@ var router_deprecated_1 = require('@angular/router-deprecated');
 var http_1 = require('@angular/http');
 var user_1 = require('./user');
 var user_service_1 = require('./user.service');
-var CreateUserComponent = (function () {
-    function CreateUserComponent(formB, _userService, _router) {
+var UserFormComponent = (function () {
+    function UserFormComponent(formB, _userService, _router, _routeParams) {
         this._userService = _userService;
         this._router = _router;
+        this._routeParams = _routeParams;
         this.user = new user_1.User();
-        this.addUserForm = formB.group({
+        this.tempUser = new user_1.User();
+        this.userForm = formB.group({
             name: ['', common_1.Validators.required],
             email: ['', common_1.Validators.compose([
                     common_1.Validators.required,
@@ -34,31 +36,51 @@ var CreateUserComponent = (function () {
             })
         });
     }
-    CreateUserComponent.prototype.routerCanDeactivate = function (next, previous) {
-        if (this.addUserForm.dirty) {
+    UserFormComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.userId = this._routeParams.get('id');
+        this.pageTitle = this.userId ? "Edit User" : "Create User";
+        // Return if there is no user id in the RouteParams
+        if (!this.userId)
+            return;
+        this._userService.getSingleUser(this.userId)
+            .subscribe(function (user) { return _this.user = user; }, function (response) {
+            if (response.status == 404) {
+                _this._router.navigate(['NotFound']);
+            }
+        });
+    };
+    UserFormComponent.prototype.routerCanDeactivate = function (next, previous) {
+        if (this.userForm.dirty) {
             return confirm('All unsaved changes will be lost, leave anyway?');
         }
     };
-    CreateUserComponent.prototype.onSubmit = function (formValue) {
+    UserFormComponent.prototype.onSubmit = function (formValue) {
         var _this = this;
-        this.user = this.addUserForm.value;
-        this._userService.createUser(this.user)
+        this.user = this.userForm.value;
+        // Assign the ID to the user if available (i.e. existing user).
+        this.user.id = this.userId;
+        // console.log('User Id: ', this.user.id); // Debugging
+        this._userService.saveUser(this.user)
             .subscribe(function (res) {
+            _this.leaveForm();
             console.log(res);
-            // TODO: this.addUserForm.markAsPristine() when available.
-            // This will stop the confirmation being displayed when saving.
-            _this._router.navigate(['UserList']);
         });
     };
-    CreateUserComponent = __decorate([
+    UserFormComponent.prototype.leaveForm = function () {
+        // TODO: this.addUserForm.markAsPristine() when available.
+        // This will stop the confirmation being displayed when saving.
+        this._router.navigate(['UserList']);
+    };
+    UserFormComponent = __decorate([
         core_1.Component({
             selector: 'add-user',
-            templateUrl: 'app/users/create-user.component.html',
+            templateUrl: 'app/users/user-form.component.html',
             providers: [user_service_1.UserService, http_1.HTTP_PROVIDERS]
         }), 
-        __metadata('design:paramtypes', [common_1.FormBuilder, user_service_1.UserService, router_deprecated_1.Router])
-    ], CreateUserComponent);
-    return CreateUserComponent;
+        __metadata('design:paramtypes', [common_1.FormBuilder, user_service_1.UserService, router_deprecated_1.Router, router_deprecated_1.RouteParams])
+    ], UserFormComponent);
+    return UserFormComponent;
 }());
-exports.CreateUserComponent = CreateUserComponent;
-//# sourceMappingURL=create-user.component.js.map
+exports.UserFormComponent = UserFormComponent;
+//# sourceMappingURL=user-form.component.js.map
