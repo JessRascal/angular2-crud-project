@@ -9,23 +9,23 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var router_deprecated_1 = require('@angular/router-deprecated');
-var posts_list_component_1 = require('./posts-list.component');
-var PostsComponent = (function () {
-    function PostsComponent() {
+var SpinnerComponent = (function () {
+    function SpinnerComponent() {
+        this.visible = true;
     }
-    PostsComponent = __decorate([
-        router_deprecated_1.RouteConfig([
-            { path: '/', name: 'PostsList', component: posts_list_component_1.PostsListComponent, useAsDefault: true }
-        ]),
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Object)
+    ], SpinnerComponent.prototype, "visible", void 0);
+    SpinnerComponent = __decorate([
         core_1.Component({
-            selector: 'posts',
-            template: "\n        <router-outlet></router-outlet>\n    ",
-            directives: [router_deprecated_1.RouterOutlet]
+            selector: 'spinner',
+            template: '<i *ngIf="visible" class="fa fa-circle-o-notch fa-spin fa-3x" aria-hidden="true"></i>',
+            styles: ["\n    \n    "]
         }), 
         __metadata('design:paramtypes', [])
-    ], PostsComponent);
-    return PostsComponent;
+    ], SpinnerComponent);
+    return SpinnerComponent;
 }());
-exports.PostsComponent = PostsComponent;
-//# sourceMappingURL=posts.component.js.map
+exports.SpinnerComponent = SpinnerComponent;
+//# sourceMappingURL=spinner.component.js.map

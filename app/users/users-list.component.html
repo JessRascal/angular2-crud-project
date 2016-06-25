@@ -1,7 +1,8 @@
 <p>
     <a [routerLink]="['CreateUser']" class="btn btn-primary">Create User</a>
 </p>
-<table class="table table-bordered">
+<spinner [visible]="isLoading"></spinner>
+<table class="table table-bordered" *ngIf="!isLoading">
     <thead>
         <tr>
             <th>Name</th>

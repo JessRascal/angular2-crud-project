@@ -9,7 +9,7 @@ import { PostsComponent } from './posts/posts.component';
 @RouteConfig([
     { path: '/', name: "Home", component: HomeComponent, useAsDefault: true },
     { path: '/users/...', name: 'Users', component: UsersComponent },
-    { path: '/posts', name: 'Posts', component: PostsComponent },
+    { path: '/posts/...', name: 'Posts', component: PostsComponent },
     { path: '/*other', name: 'Other', redirectTo: ['Home'] }
 ])
 

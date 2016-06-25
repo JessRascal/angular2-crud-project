@@ -12,21 +12,26 @@ var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
 var router_deprecated_1 = require('@angular/router-deprecated');
 var user_service_1 = require('./user.service');
+var spinner_component_1 = require('../shared/spinner.component');
 var UsersListComponent = (function () {
     function UsersListComponent(_userService) {
         this._userService = _userService;
+        this.isLoading = true;
         this.users = [];
     }
     UsersListComponent.prototype.getUsers = function () {
         var _this = this;
         this._userService.getUsers()
-            .subscribe(function (users) { return _this.users = users; }, function (error) { return console.error(error); });
+            .subscribe(function (users) {
+            _this.users = users,
+                _this.isLoading = false;
+        }, function (error) { return console.error(error); });
     };
     UsersListComponent.prototype.deleteUser = function (user) {
         var _this = this;
         if (confirm('Are you sure you want to delete ' + user.name + '?')) {
             var index = this.users.indexOf(user);
-            // Remove the user based on their index.
+            // Remove the user based on its index.
             this.users.splice(index, 1);
             this._userService.deleteUser(user.id)
                 .subscribe(function (res) {
@@ -49,7 +54,7 @@ var UsersListComponent = (function () {
             selector: 'users-list',
             templateUrl: 'app/users/users-list.component.html',
             styles: ["\n        i {\n            cursor: pointer;\n        }\n    "],
-            directives: [router_deprecated_1.ROUTER_DIRECTIVES],
+            directives: [router_deprecated_1.ROUTER_DIRECTIVES, spinner_component_1.SpinnerComponent],
             providers: [http_1.HTTP_PROVIDERS, user_service_1.UserService]
         }), 
         __metadata('design:paramtypes', [user_service_1.UserService])

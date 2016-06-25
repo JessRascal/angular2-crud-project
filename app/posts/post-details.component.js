@@ -9,23 +9,22 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var router_deprecated_1 = require('@angular/router-deprecated');
-var posts_list_component_1 = require('./posts-list.component');
-var PostsComponent = (function () {
-    function PostsComponent() {
+var post_1 = require('./post');
+var PostDetailsComponent = (function () {
+    function PostDetailsComponent() {
     }
-    PostsComponent = __decorate([
-        router_deprecated_1.RouteConfig([
-            { path: '/', name: 'PostsList', component: posts_list_component_1.PostsListComponent, useAsDefault: true }
-        ]),
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', post_1.Post)
+    ], PostDetailsComponent.prototype, "post", void 0);
+    PostDetailsComponent = __decorate([
         core_1.Component({
-            selector: 'posts',
-            template: "\n        <router-outlet></router-outlet>\n    ",
-            directives: [router_deprecated_1.RouterOutlet]
+            selector: 'post-details',
+            templateUrl: 'app/posts/post-details.component.html'
         }), 
         __metadata('design:paramtypes', [])
-    ], PostsComponent);
-    return PostsComponent;
+    ], PostDetailsComponent);
+    return PostDetailsComponent;
 }());
-exports.PostsComponent = PostsComponent;
-//# sourceMappingURL=posts.component.js.map
+exports.PostDetailsComponent = PostDetailsComponent;
+//# sourceMappingURL=post-details.component.js.map

@@ -10,9 +10,7 @@ import { User } from './User';
 export class UserService {
     private _usersUrl = "http://jsonplaceholder.typicode.com/users";
 
-    constructor(private _http: Http) {
-
-    }
+    constructor(private _http: Http) { }
 
     // GET all users
     getUsers(): Observable<User[]> {

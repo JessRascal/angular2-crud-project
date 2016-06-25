@@ -4,6 +4,8 @@ import { Router, ROUTER_DIRECTIVES } from '@angular/router-deprecated';
 
 import { UserService } from './user.service';
 
+import { SpinnerComponent } from '../shared/spinner.component';
+
 @Component({
     selector: 'users-list',
     templateUrl: 'app/users/users-list.component.html',
@@ -12,11 +14,12 @@ import { UserService } from './user.service';
             cursor: pointer;
         }
     `],
-    directives: [ ROUTER_DIRECTIVES ],
+    directives: [ ROUTER_DIRECTIVES, SpinnerComponent ],
     providers: [ HTTP_PROVIDERS, UserService ]
 })
 
 export class UsersListComponent implements OnInit {
+    isLoading = true;
     users = [];
     userId: string;
 
@@ -27,7 +30,10 @@ export class UsersListComponent implements OnInit {
     getUsers() {
         this._userService.getUsers()
             .subscribe(
-                users => this.users = users,
+                users => {
+                    this.users = users,
+                    this.isLoading = false
+                },
                 error => console.error(error)
                 );
     }
@@ -35,7 +41,7 @@ export class UsersListComponent implements OnInit {
     deleteUser(user) {
         if (confirm('Are you sure you want to delete ' + user.name + '?')) {
 			var index = this.users.indexOf(user)
-			// Remove the user based on their index.
+			// Remove the user based on its index.
             this.users.splice(index, 1);
 
 			this._userService.deleteUser(user.id)

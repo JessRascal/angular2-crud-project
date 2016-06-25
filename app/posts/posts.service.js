@@ -9,23 +9,24 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var router_deprecated_1 = require('@angular/router-deprecated');
-var posts_list_component_1 = require('./posts-list.component');
-var PostsComponent = (function () {
-    function PostsComponent() {
+var http_1 = require('@angular/http');
+require('rxjs/add/operator/map');
+require('rxjs/add/operator/catch');
+var PostsService = (function () {
+    function PostsService(_http) {
+        this._http = _http;
+        this._postsUrl = "http://jsonplaceholder.typicode.com/posts";
     }
-    PostsComponent = __decorate([
-        router_deprecated_1.RouteConfig([
-            { path: '/', name: 'PostsList', component: posts_list_component_1.PostsListComponent, useAsDefault: true }
-        ]),
-        core_1.Component({
-            selector: 'posts',
-            template: "\n        <router-outlet></router-outlet>\n    ",
-            directives: [router_deprecated_1.RouterOutlet]
-        }), 
-        __metadata('design:paramtypes', [])
-    ], PostsComponent);
-    return PostsComponent;
+    // GET all posts.
+    PostsService.prototype.getPosts = function () {
+        return this._http.get(this._postsUrl)
+            .map(function (res) { return res.json(); }, function (err) { return console.log(err); });
+    };
+    PostsService = __decorate([
+        core_1.Injectable(), 
+        __metadata('design:paramtypes', [http_1.Http])
+    ], PostsService);
+    return PostsService;
 }());
-exports.PostsComponent = PostsComponent;
-//# sourceMappingURL=posts.component.js.map
+exports.PostsService = PostsService;
+//# sourceMappingURL=posts.service.js.map
