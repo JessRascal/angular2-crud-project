@@ -42,7 +42,7 @@ var PostsListComponent = (function () {
         this._postsService.getPosts(filter)
             .subscribe(function (posts) {
             _this.posts = posts;
-            _this.pagedPosts = _this.getPostsInPage(1);
+            _this.pagedPosts = _.take(_this.posts, _this.pageSize);
             // console.log(posts); // Debugging
             // console.log(this.pagedPosts); // Debugging
         }, null, function () { _this.postsLoading = false; });
@@ -65,15 +65,8 @@ var PostsListComponent = (function () {
         this.getPostComments(this.selectedPost.id);
     };
     PostsListComponent.prototype.onPageChanged = function (page) {
-        this.pagedPosts = this.getPostsInPage(page);
-    };
-    PostsListComponent.prototype.getPostsInPage = function (page) {
-        var result = [];
-        var startingIndex = (page - 1) * this.pageSize;
-        var endIndex = Math.min(startingIndex + this.pageSize, this.posts.length);
-        for (var i = startingIndex; i < endIndex; i++)
-            result.push(this.posts[i]);
-        return result;
+        var startIndex = (page - 1) * this.pageSize;
+        this.pagedPosts = _.take(_.rest(this.posts, startIndex), this.pageSize);
     };
     PostsListComponent = __decorate([
         core_1.Component({
