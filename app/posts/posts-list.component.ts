@@ -7,6 +7,7 @@ import { PostService } from './post.service';
 import { Post } from './post';
 
 import { SpinnerComponent } from '../shared/spinner.component';
+import { PaginationComponent } from '../shared/pagination.component';
 
 @Component({
     selector: 'posts-list',
@@ -29,7 +30,7 @@ import { SpinnerComponent } from '../shared/spinner.component';
             margin-top:20px;
         }
     `],
-    directives: [ SpinnerComponent ],
+    directives: [ SpinnerComponent, PaginationComponent ],
     providers: [ HTTP_PROVIDERS, UserService, PostService ]
 })
 
@@ -37,9 +38,11 @@ export class PostsListComponent implements OnInit {
     postsLoading;
     users = [];
     posts = [];
+    pagedPosts = [];
     comments = [];
     selectedPost: Post;
     commentsLoading;
+    pageSize = 10;
 
     constructor(
         private _postsService: PostService,
@@ -63,7 +66,9 @@ export class PostsListComponent implements OnInit {
         this._postsService.getPosts(filter)
             .subscribe(posts => {
                 this.posts = posts;
+                this.pagedPosts = this.getPostsInPage(1);
                 // console.log(posts); // Debugging
+                // console.log(this.pagedPosts); // Debugging
             },
             null,
             () => { this.postsLoading = false });
@@ -88,5 +93,20 @@ export class PostsListComponent implements OnInit {
         this.selectedPost = post;
         // console.log('Selected post: ', this.selectedPost); // Debugging
         this.getPostComments(this.selectedPost.id);
+    }
+
+    onPageChanged(page) {
+        this.pagedPosts = this.getPostsInPage(page);
+    }
+
+    private getPostsInPage(page) {
+        var result = [];
+        var startingIndex = (page - 1) * this.pageSize;
+        var endIndex = Math.min(startingIndex + this.pageSize, this.posts.length);
+
+        for (var i = startingIndex; i < endIndex; i++)
+            result.push(this.posts[i]);
+
+        return result;
     }
 }

@@ -13,13 +13,16 @@ var http_1 = require('@angular/http');
 var user_service_1 = require('../users/user.service');
 var post_service_1 = require('./post.service');
 var spinner_component_1 = require('../shared/spinner.component');
+var pagination_component_1 = require('../shared/pagination.component');
 var PostsListComponent = (function () {
     function PostsListComponent(_postsService, _usersService) {
         this._postsService = _postsService;
         this._usersService = _usersService;
         this.users = [];
         this.posts = [];
+        this.pagedPosts = [];
         this.comments = [];
+        this.pageSize = 10;
     }
     PostsListComponent.prototype.ngOnInit = function () {
         this.getPosts();
@@ -39,7 +42,9 @@ var PostsListComponent = (function () {
         this._postsService.getPosts(filter)
             .subscribe(function (posts) {
             _this.posts = posts;
+            _this.pagedPosts = _this.getPostsInPage(1);
             // console.log(posts); // Debugging
+            // console.log(this.pagedPosts); // Debugging
         }, null, function () { _this.postsLoading = false; });
     };
     PostsListComponent.prototype.getPostComments = function (id) {
@@ -59,12 +64,23 @@ var PostsListComponent = (function () {
         // console.log('Selected post: ', this.selectedPost); // Debugging
         this.getPostComments(this.selectedPost.id);
     };
+    PostsListComponent.prototype.onPageChanged = function (page) {
+        this.pagedPosts = this.getPostsInPage(page);
+    };
+    PostsListComponent.prototype.getPostsInPage = function (page) {
+        var result = [];
+        var startingIndex = (page - 1) * this.pageSize;
+        var endIndex = Math.min(startingIndex + this.pageSize, this.posts.length);
+        for (var i = startingIndex; i < endIndex; i++)
+            result.push(this.posts[i]);
+        return result;
+    };
     PostsListComponent = __decorate([
         core_1.Component({
             selector: 'posts-list',
             templateUrl: 'app/posts/posts-list.component.html',
             styles: ["\n        .list-group-item.active,\n        .list-group-item:hover,\n        .list-group-item:focus {\n            cursor: pointer;\n            color: #212121;\n            background-color: #eee;\n            border-color: #eee;\n        }\n\n        .comment-img {\n            border-radius: 100%;\n        }\n\n        .top-buffer {\n            margin-top:20px;\n        }\n    "],
-            directives: [spinner_component_1.SpinnerComponent],
+            directives: [spinner_component_1.SpinnerComponent, pagination_component_1.PaginationComponent],
             providers: [http_1.HTTP_PROVIDERS, user_service_1.UserService, post_service_1.PostService]
         }), 
         __metadata('design:paramtypes', [post_service_1.PostService, user_service_1.UserService])

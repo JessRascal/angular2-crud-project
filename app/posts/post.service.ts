@@ -18,8 +18,10 @@ export class PostService {
     getPosts(filter?): Observable<[Post]> {
         var url = this._postsUrl;
 
-        if (filter && filter.userId)
+        if (filter && filter.userId && filter.userId != 0)
             url += "?userId=" + filter.userId;
+
+            console.log(url);
 
         return this._http.get(url)
             .map(

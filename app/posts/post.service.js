@@ -20,8 +20,9 @@ var PostService = (function () {
     // GET all posts.
     PostService.prototype.getPosts = function (filter) {
         var url = this._postsUrl;
-        if (filter && filter.userId)
+        if (filter && filter.userId && filter.userId != 0)
             url += "?userId=" + filter.userId;
+        console.log(url);
         return this._http.get(url)
             .map(function (res) { return res.json(); }, function (err) { return console.log(err); });
     };
